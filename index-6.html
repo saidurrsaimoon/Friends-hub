@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Friends hub</title>
+<style>
+:root{--bg:#000;--card:#131313;--line:#2b2b2b;--text:#f4f4f4;--dim:#9c9c9c;--o:#ff9000;--o2:#ffb340;--gay:#ff5fa2;--les:#b06bff;--str:#37c2ff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+*{box-sizing:border-box}
+body{margin:0;background:#000;color:var(--text);font-family:Arial,Helvetica,sans-serif;overflow-x:hidden;
+background-image:radial-gradient(600px 400px at 90% -5%,rgba(255,144,0,.16),transparent 70%),radial-gradient(500px 400px at -10% 40%,rgba(176,107,255,.10),transparent 70%),radial-gradient(500px 400px at 110% 80%,rgba(255,95,162,.09),transparent 70%);background-attachment:fixed}
+button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.logo{display:inline-flex;align-items:center;font-weight:900;letter-spacing:-.03em;font-family:"Arial Black",Arial,sans-serif;line-height:1}
+.logo .a{background:linear-gradient(90deg,#fff,#777);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo .b{background:var(--o);color:#000;border-radius:.16em;padding:.06em .18em .1em;margin-left:.08em}
+.btn{background:var(--o);color:#000;border:0;border-radius:10px;padding:14px 32px;font-weight:700;font-size:17px;box-shadow:0 0 0 0 rgba(255,144,0,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 14px rgba(255,144,0,0)}100%{box-shadow:0 0 0 0 rgba(255,144,0,0)}}
+.full{position:fixed;inset:0;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;gap:16px;transition:opacity .5s}
+.full.gone{opacity:0;pointer-events:none}
+#gate{z-index:30}#welcome{z-index:10}
+#gate .logo{font-size:clamp(34px,11vw,64px)}
+#gate h1{margin:6px 0 0;font-size:28px}
+.full p{margin:0;color:var(--dim);font-size:16px;max-width:32ch;line-height:1.5}
+.btns{display:flex;gap:14px;margin-top:8px}
+#noBtn{background:#222;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:14px 34px;font-weight:700;font-size:17px;touch-action:none}
+#welcome .logo{font-size:clamp(40px,13vw,84px)}
+#groupPic{width:min(60vw,220px);border-radius:18px;border:2px solid var(--o);box-shadow:0 0 40px rgba(255,144,0,.35)}
+nav{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(0,0,0,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .logo{font-size:22px}
+nav div{display:flex;gap:14px}
+nav a{color:var(--dim);text-decoration:none;font-size:14px;font-weight:700}
+nav a:hover{color:var(--o)}
+main{max-width:760px;margin:0 auto;padding:0 16px 40px}
+.hero{text-align:center;padding:36px 0 10px}
+.hero .logo{font-size:clamp(40px,12vw,68px)}
+.hero p{color:var(--dim);margin:12px auto 0;max-width:34ch;line-height:1.5}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 6px;text-align:center}
+.stat b{display:block;font-size:26px;color:var(--o)}
+.stat span{font-size:12px;color:var(--dim)}
+h2{font-size:24px;margin:40px 0 4px}
+h2::after{content:"";display:block;width:46px;height:4px;background:var(--o);border-radius:2px;margin-top:8px}
+.sub{color:var(--dim);margin:8px 0 16px;font-size:15px}
+.memes{display:flex;gap:12px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory}
+.meme{flex:0 0 250px;scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;padding:0;text-align:left;color:var(--text);transition:transform .2s,border-color .2s}
+.meme:hover{transform:translateY(-4px);border-color:var(--o)}
+.meme .img{height:180px;display:grid;place-items:center;font-size:66px;background:#1c1c1c;overflow:hidden}
+.meme .img img{width:100%;height:100%;object-fit:cover}
+.meme p{margin:0;padding:12px;font-size:14px;line-height:1.4}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.member{position:relative;background:linear-gradient(160deg,#181818,#0e0e0e);border:1px solid var(--line);border-radius:16px;padding:18px 10px 16px;text-align:center;color:var(--text);transition:transform .2s,border-color .2s,box-shadow .2s}
+.member:hover,.member:active{transform:translateY(-4px);border-color:var(--o);box-shadow:0 8px 28px rgba(255,144,0,.18)}
+.pic{width:88px;height:88px;border-radius:50%;margin:0 auto 10px;background:#222;border:3px solid var(--o);display:grid;place-items:center;font-size:30px;font-weight:700;color:var(--o);overflow:hidden}
+.pic img{width:100%;height:100%;object-fit:cover}
+.member b{display:block;font-size:15px}
+.member .nick{display:block;color:var(--dim);font-size:14px;margin-top:4px;overflow-wrap:anywhere}
+.tag{display:inline-block;margin-top:10px;background:rgba(255,144,0,.14);color:var(--o2);border-radius:20px;padding:4px 10px;font-size:12px;font-weight:700}
+.crown{position:absolute;top:8px;right:10px;font-size:20px}
+.lb{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px 14px}
+.lb-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.lb-row:last-child{border:0}
+.lb-row .rk{width:26px;font-weight:900;color:var(--o)}
+.lb-row .nm{flex:0 0 96px;font-size:14px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-row .bar{flex:1}
+.lb-row .pc{width:42px;text-align:right;font-weight:700;font-size:14px}
+.bar{height:12px;border-radius:6px;background:#252525;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:6px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+#modal,#lightbox{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.85);display:none;align-items:flex-end;justify-content:center}
+#modal.open,#lightbox.open{display:flex}
+#lightbox{align-items:center;padding:16px}
+#lightbox .lbox{max-width:100%;max-height:85%;text-align:center;font-size:120px}
+#lightbox img{max-width:100%;max-height:80vh;border-radius:12px}
+.sheet{width:100%;max-width:520px;background:#101010;border:1px solid var(--line);border-radius:22px 22px 0 0;padding:24px 20px calc(24px + env(safe-area-inset-bottom,0px));animation:up .3s ease-out}
+@keyframes up{from{transform:translateY(50px);opacity:0}to{transform:none;opacity:1}}
+.sheet .pic{width:100px;height:100px}
+.sheet h3{margin:0;text-align:center;font-size:21px}
+.sheet .nk{text-align:center;color:var(--dim);margin:4px 0 6px}
+.sheet .tg{text-align:center}
+.row{margin:16px 0}
+.row .top{display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px}
+.verdict{margin-top:18px;text-align:center;background:rgba(255,144,0,.12);border:1px dashed var(--o);color:var(--o2);border-radius:12px;padding:12px;font-weight:700}
+.close{display:block;margin:18px auto 0;background:#222;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px 28px}
+.chk{display:grid;gap:10px}
+.chk input{background:#111;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:16px;font-family:inherit}
+.chk input:focus{outline:2px solid var(--o);border-color:var(--o)}
+.chk .btn{animation:none}
+#result .card{margin-top:16px;background:var(--card);border:1px solid var(--o);border-radius:16px;padding:18px 16px;animation:up .3s ease-out}
+#result h3{margin:0;text-align:center;font-size:20px}
+#result .nk{text-align:center;color:var(--dim);margin:4px 0 6px}
+footer{text-align:center;color:var(--dim);font-size:13px;padding:10px 18px 34px;line-height:1.6}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .6s,transform .6s}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div id="gate" class="full">
+  <div class="logo"><span class="a">Friends</span><span class="b">hub</span></div>
+  <h1>Are you gay?</h1>
+  <p id="gateMsg">No dile toh you're definitely gay 😏</p>
+  <div class="btns"><button class="btn" id="yesBtn">Yes</button><button id="noBtn">No</button></div>
+</div>
+
+<div id="welcome" class="full">
+  <img id="groupPic" src="logo.jpg" alt="" onerror="this.remove()">
+  <div class="logo"><span class="a">Friends</span><span class="b">hub</span></div>
+  <p>Welcome, bondhura! Ei site amader 6 jon er group er.</p>
+  <button class="btn" id="enterBtn">Dhuke poro</button>
+</div>
+
+<nav>
+  <div class="logo"><span class="a">Friends</span><span class="b">hub</span></div>
+  <div><a href="#check-s">Check</a><a href="#members-s">Members</a><a href="#rank-s">Rank</a></div>
+</nav>
+
+<main>
+  <section class="hero rv">
+    <div class="logo"><span class="a">Friends</span><span class="b">hub</span></div>
+    <p>6 bondhur ekta pagol group. Ekhane shudhu moja ar gay-o-meter.</p>
+    <div class="stats">
+      <div class="stat"><b id="s1">6</b><span>Members</span></div>
+      <div class="stat"><b id="s2">0%</b><span>Group avg gay</span></div>
+      <div class="stat"><b id="s3">0</b><span>Pure straight 😎</span></div>
+    </div>
+  </section>
+
+  <section id="check-s" class="rv">
+    <h2>Tumi koto % gay?</h2>
+    <p class="sub">Nam ar nickname likho, dekho tumi koto % gay 😏</p>
+    <div class="chk">
+      <input id="cn" placeholder="Tomar nam" maxlength="30" autocomplete="off">
+      <input id="ck" placeholder="Nickname" maxlength="30" autocomplete="off">
+      <button class="btn" id="cbtn">Check koro</button>
+    </div>
+    <div id="result"></div>
+  </section>
+
+  <section id="members-s" class="rv">
+    <h2>Members</h2>
+    <p class="sub">Kono ekjon er upor tap koro, % dekho.</p>
+    <div class="grid" id="members"></div>
+  </section>
+
+  <section id="rank-s" class="rv">
+    <h2>Gay Leaderboard</h2>
+    <p class="sub">Kar % shobcheye beshi? (moja korar jonno)</p>
+    <div class="lb" id="lb"></div>
+  </section>
+</main>
+<footer>Made with 🧡 by Friends hub<br>Shob % fake, bondhuder majhe hasar jonno.</footer>
+
+<div id="modal" role="dialog" aria-modal="true" aria-label="Member details"><div class="sheet" id="sheet"></div></div>
+
+<script>
+// ===== EDIT HERE =====
+// Sob pic index.html er sathe SAME folder e rakho. Group pic: logo.jpg
+var MEMBERS = [
+  {name:"Saidur R. Saimoon", nick:"SAIM🍒N",          title:"Group er Boss 👑",      pic:"saim.jpg",            gay:0, les:0, str:100},
+  {name:"Tamim Mridha",      nick:"@Body 👅",          title:"Chief Meme Officer 😂", pic:"tamim-mridha.jpg",    gay:78, les:12, str:10},
+  {name:"Shahriar Hasib",    nick:"@Rendi🍆",          title:"Night Owl 🦉",          pic:"shahriar.jpg",        gay:95, les:3, str:2},
+  {name:"MH Sihab",          nick:"@pompom Sihab 🍼",  title:"Group er Baby 🍼",      pic:"sihab.jpg",           gay:85, les:10, str:5},
+  {name:"Emam H. Joy",       nick:"@cemel joy 🚬",     title:"Chill King 😎",         pic:"joy.jpg",             gay:90, les:6, str:4},
+  {name:"Tamim Commandar",   nick:"condom tamim 💦",   title:"Commander 🎖️",          pic:"tamim-commandar.jpg", gay:82, les:13, str:5}
+];
+// =====================
+
+function $(id){return document.getElementById(id)}
+function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML}
+function ini(n){return n.replace(/[^A-Za-z ]/g,"").split(" ").filter(Boolean).slice(0,2).map(function(w){return w[0]}).join("").toUpperCase()}
+function picHTML(m){return '<div class="pic">'+(m.pic?'<img alt="" src="'+m.pic+'" onerror="this.replaceWith(document.createTextNode(\''+ini(m.name)+'\'))">':ini(m.name))+'</div>'}
+function inner(x){return x.img?'<img alt="" src="'+x.img+'" onerror="this.replaceWith(document.createTextNode(\''+x.emoji+'\'))">':x.emoji}
+function count(el,to,suf){var n=0;var iv=setInterval(function(){n=Math.min(to,n+1);el.textContent=n+suf;if(n>=to)clearInterval(iv)},25)}
+
+var byGay=MEMBERS.slice().sort(function(a,b){return b.gay-a.gay});
+var avg=Math.round(MEMBERS.reduce(function(s,m){return s+m.gay},0)/MEMBERS.length);
+$("s1").textContent=MEMBERS.length;$("s3").textContent=MEMBERS.filter(function(m){return m.str>=100}).length;count($("s2"),avg,"%");
+
+MEMBERS.forEach(function(m){
+  var b=document.createElement("button");b.className="member";
+  b.innerHTML=(m===byGay[0]?'<span class="crown">👑</span>':'')+picHTML(m)+'<b>'+esc(m.name)+'</b><span class="nick">'+esc(m.nick)+'</span><span class="tag">'+esc(m.title)+'</span>';
+  b.addEventListener("click",function(){openMember(m)});
+  $("members").appendChild(b);
+});
+
+byGay.forEach(function(m,i){
+  $("lb").insertAdjacentHTML("beforeend",'<div class="lb-row"><span class="rk">'+(i+1)+'</span><span class="nm">'+esc(m.name)+'</span><div class="bar"><i data-w="'+m.gay+'" style="background:var(--gay)"></i></div><span class="pc">'+m.gay+'%</span></div>');
+});
+
+function row(l,v,c,id){return '<div class="row"><div class="top"><span>'+l+'</span><span data-v="'+id+'">0%</span></div><div class="bar"><i data-w="'+v+'" data-id="'+id+'" style="background:'+c+'"></i></div></div>'}
+function openMember(m){
+  var top=Math.max(m.gay,m.les,m.str),v=top===m.gay?"Verdict: Certified Gay 🏳️‍🌈":top===m.les?"Verdict: Lesbian Energy 💜":"Verdict: Straight (sure? 🤨)";
+  $("sheet").innerHTML=picHTML(m)+'<h3>'+esc(m.name)+'</h3><div class="nk">'+esc(m.nick)+'</div><div class="tg"><span class="tag">'+esc(m.title)+'</span></div>'
+   +row("🏳️‍🌈 Gay",m.gay,"var(--gay)","g")+row("💜 Lesbian",m.les,"var(--les)","l")+row("➡️ Straight",m.str,"var(--str)","s")
+   +'<div class="verdict">'+v+'</div><button class="close" id="cb">Bondho koro</button>';
+  $("modal").classList.add("open");$("cb").addEventListener("click",closeAll);$("cb").focus();
+  animBars($("sheet"));
+}
+function animBars(c){requestAnimationFrame(function(){requestAnimationFrame(function(){
+  c.querySelectorAll("[data-id]").forEach(function(el){var w=+el.dataset.w;el.style.width=w+"%";count(c.querySelector('[data-v="'+el.dataset.id+'"]'),w,"%")});
+})})}
+function hash(t){var h=5381;for(var i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))>>>0;return h}
+function check(){
+  var n=$("cn").value.trim(),k=$("ck").value.trim();
+  if(!n){$("cn").focus();return}
+  var h=hash((n+"|"+k).toLowerCase());
+  var g=55+h%45, l=Math.floor((100-g)*(((h>>>8)%100)/100)), t=100-g-l;
+  var v=g>=90?"Verdict: 100% Certified Gay 🏳️‍🌈🔥":g>=75?"Verdict: Gay confirmed 🏳️‍🌈":"Verdict: Gay, tobe ektu lukaiya 😏";
+  $("result").innerHTML='<div class="card"><h3>'+esc(n)+'</h3><div class="nk">'+esc(k)+'</div>'
+   +row("🏳️‍🌈 Gay",g,"var(--gay)","g")+row("💜 Lesbian",l,"var(--les)","l")+row("➡️ Straight",t,"var(--str)","s")
+   +'<div class="verdict">'+v+'</div></div>';
+  animBars($("result"));
+}
+$("cbtn").addEventListener("click",check);
+$("ck").addEventListener("keydown",function(e){if(e.key==="Enter")check()});
+$("cn").addEventListener("keydown",function(e){if(e.key==="Enter")$("ck").focus()});
+function closeAll(){$("modal").classList.remove("open")}
+$("modal").addEventListener("click",function(e){if(e.target===this)closeAll()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll()});
+
+// scroll reveal + leaderboard bars
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");e.target.querySelectorAll(".lb .bar i").forEach(function(i){i.style.width=i.dataset.w+"%"});io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll(".rv").forEach(function(el){io.observe(el)});
+
+// gate
+var noBtn=$("noBtn"),gm=$("gateMsg"),taunts=["Definitely gay 🏳️‍🌈","Palaite parbi na, tui gay 😂","Yes e click kor, gay! 🌈","Sure gay 100% 🏳️‍🌈","Gay ke ke palay 🏃‍♂️💨"],ti=0;
+function dodge(e){if(e){e.preventDefault();e.stopPropagation()}
+  var w=innerWidth-noBtn.offsetWidth-20,h=innerHeight-noBtn.offsetHeight-20;
+  noBtn.style.position="fixed";noBtn.style.left=(10+Math.random()*Math.max(w,0))+"px";noBtn.style.top=(10+Math.random()*Math.max(h,0))+"px";
+  gm.textContent=taunts[ti++%taunts.length]}
+["pointerenter","pointerdown","touchstart","mouseover","click","focus"].forEach(function(ev){noBtn.addEventListener(ev,dodge,{passive:false})});
+$("yesBtn").addEventListener("click",function(){$("gate").classList.add("gone")});
+$("enterBtn").addEventListener("click",function(){$("welcome").classList.add("gone")});
+</script>
+</body>
+</html>
